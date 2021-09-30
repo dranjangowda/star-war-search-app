@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>star wars character</h1>
+    <input type="text" id="character" placeholder="enter the character">
+    <button onclick="searchMovies()"> search character</button>
+    <div id="container">
+
+    </div>
+</body>
+<script>
+
+    async function searchMovies(){
+        let container = document.getElementById("container")
+        container.innerHTML = null
+      try{
+        let character = document.getElementById("character").value
+        let res  = await fetch(`https://swapi.dev/api/people/?search=${character}`)
+        let data = await res.json()
+        let content = data.results
+        console.log(content)
+        for(let i=0;i<content.length;i++){
+            let name= document.createElement("p")
+            name.innerText = "name --- " +  content[i].name
+            let height = document.createElement("p")
+            height.innerText = "height ---" +content[i].height;
+            let gender = document.createElement("p")
+            gender.innerText = "gender --- "+content[i].gender
+            let mass = document.createElement("p")
+            mass.innerText ="mass ---" + content[i].mass
+            let skincolour = document.createElement("p")
+            skincolour.innerText = "skincolour -- "+content[i].skin_color
+            // let height = document.createElement("p")
+            // height.innerText = content[i].height;
+            // let height = document.createElement("p")
+            // height.innerText = content[i].height;
+            // let height = document.createElement("p")
+            // height.innerText = content[i].height;
+            container.append(name,height,gender,mass,skincolour)
+        }
+      }
+      catch(err){
+          console.log("error")
+      }
+    }
+   
+</script>
+</html>
